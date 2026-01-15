@@ -130,11 +130,11 @@ mod unix {
     // shm_open name must begin with "/" and usually must not contain other '/'
     // Make something unique-ish (pid + name), consider using pointer of name as well
     #[cfg(target_os = "macos")]
-    let name = format!("/shr-{}", &name[..=cmp::min(name.len(), 26)]);
+    let name = format!("/shr-{}", &name[..cmp::min(name.len(), 26)]);
     #[cfg(not(target_os = "macos"))]
     let name = format!(
       "/shr-{}",
-      &name[..=cmp::min(name.len(), libc::NAME_MAX as usize)]
+      &name[..cmp::min(name.len(), libc::NAME_MAX as usize)]
     );
     let cname = CString::new(name).map_err(|_| Error::from_reason("name contains NUL"))?;
 
