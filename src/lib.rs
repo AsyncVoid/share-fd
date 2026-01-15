@@ -151,7 +151,11 @@ mod unix {
 
   fn share_shm(payload: Buffer, name: Option<String>) -> Result<Pipe> {
     let name = name.unwrap_or_else(|| Ulid::new().to_string());
-    let fd = shm_open(name.as_str(), libc::O_CREAT | libc::O_EXCL | libc::O_RDWR, 0o600)?;
+    let fd = shm_open(
+      name.as_str(),
+      libc::O_CREAT | libc::O_EXCL | libc::O_RDWR,
+      0o600,
+    )?;
     unsafe {
       if libc::ftruncate(fd, 0) < 0 {
         return Err(last_err("ftruncate failed"));
