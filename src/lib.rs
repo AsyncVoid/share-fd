@@ -12,6 +12,7 @@ fn last_err(msg: &str) -> Error {
 mod unix {
   use super::*;
   use napi::Error;
+  use std::cmp;
   use std::ffi::CString;
   use ulid::Ulid;
 
@@ -64,7 +65,7 @@ mod unix {
 
     #[napi(js_name = "memfd_create")]
     pub fn memfd_create_js(name: String, flags: u32) -> Result<i32> {
-      Ok(memfd_create(&name, flags)?)
+      memfd_create(&name, flags)
     }
 
     pub fn share_memfd(payload: Buffer, name: Option<String>) -> Result<Pipe> {
@@ -128,7 +129,13 @@ mod unix {
   fn shm_open(name: &str, flags: i32, mode: u32) -> Result<i32> {
     // shm_open name must begin with "/" and usually must not contain other '/'
     // Make something unique-ish (pid + name), consider using pointer of name as well
-    let name = format!("/share-{}-{}", std::process::id(), name);
+    #[cfg(target_os = "macos")]
+    let name = format!("/shr-{}", &name[..=cmp::min(name.len(), 26)]);
+    #[cfg(not(target_os = "macos"))]
+    let name = format!(
+      "/shr-{}",
+      &name[..=cmp::min(name.len(), libc::NAME_MAX as usize)]
+    );
     let cname = CString::new(name).map_err(|_| Error::from_reason("name contains NUL"))?;
 
     let fd = unsafe { libc::shm_open(cname.as_ptr(), flags, mode) };
@@ -340,7 +347,8 @@ mod tests {
   #[test]
   fn it_works() {
     let result = format!("/share-{}-{}", std::process::id(), Ulid::new().to_string());
-    println!("{:?}", result);
-    assert_eq!(1, 1);
+    dbg!("{:?}", result);
+    ///share-186352-01KF0MCZ1S4H80VP3A8JS5NA02
+    assert_eq!(1, 2);
   }
 }
