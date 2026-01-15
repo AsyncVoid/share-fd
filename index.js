@@ -577,6 +577,7 @@ if (!nativeBinding) {
 
 module.exports = nativeBinding
 module.exports.Pipe = nativeBinding.Pipe
+module.exports.NamedPipe = nativeBinding.Pipe
 module.exports.memfd_create = nativeBinding.memfd_create
 module.exports.set_cloexec = nativeBinding.set_cloexec
 module.exports.share = nativeBinding.share
