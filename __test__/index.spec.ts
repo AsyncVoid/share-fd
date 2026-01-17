@@ -9,16 +9,16 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 function isPipe(pipe: Pipe | NamedPipe): pipe is Pipe {
-  return pipe instanceof Pipe
+  return pipe instanceof Pipe || pipe.name !== undefined
 }
 
 function isNamedPipe(pipe: Pipe | NamedPipe): pipe is NamedPipe {
-  return pipe instanceof NamedPipe
+  return pipe instanceof NamedPipe || pipe.path !== undefined
 }
 
-test('share across child process', (t) => {
+test('share across child process', async (t) => {
   const payload = Buffer.from('hello world')
-  const pipe = share(payload)
+  const pipe = await share(payload);
 
   let child
 
@@ -36,9 +36,9 @@ test('share across child process', (t) => {
       stdio: ['ignore', 'pipe', 'ignore'],
       encoding: 'utf8',
     })
+  } else {
+    t.fail('result is not a pipe or named pipe')
   }
-
-  t.not(child, undefined)
 
   console.log('STDOUT:', child.stdout)
   console.log('STDERR:', child.stderr)

@@ -576,12 +576,12 @@ if (!nativeBinding) {
 }
 
 module.exports = nativeBinding
+module.exports.NamedPipe = nativeBinding.NamedPipe
 module.exports.Pipe = nativeBinding.Pipe
-module.exports.NamedPipe = nativeBinding.Pipe
-module.exports.memfd_create = nativeBinding.memfd_create
-module.exports.set_cloexec = nativeBinding.set_cloexec
 module.exports.share = nativeBinding.share
+module.exports.shareFIFO = nativeBinding.shareFIFO
 module.exports.shareMemFD = nativeBinding.shareMemFD
+module.exports.shareNamedPipe = nativeBinding.shareNamedPipe
+module.exports.sharePipe = nativeBinding.sharePipe
 module.exports.shareSHM = nativeBinding.shareSHM
 module.exports.shm_open = nativeBinding.shm_open
-module.exports.shareNamedPipe = nativeBinding.shareNamedPipe

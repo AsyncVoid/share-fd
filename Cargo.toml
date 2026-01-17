@@ -7,8 +7,9 @@ version = "0.1.0"
 crate-type = ["cdylib"]
 
 [dependencies]
-napi        = { version = "3.8.2", features = ["napi6"] }
+napi        = { version = "3.8.2", features = ["napi6", "tokio_rt"] }
 napi-derive = "3.5.1"
+tokio = { version = "1.49.0", features = ["full"] }
 ulid        = "1.2.1"
 
 [build-dependencies]
