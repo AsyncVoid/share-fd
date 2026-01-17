@@ -11,7 +11,11 @@ export declare class Pipe {
   close(): void
 }
 
-export declare function share(payload: Buffer, name?: string | undefined | null): Promise<NamedPipe | Pipe>
+export declare function memfd_create(name: string, flags: number): number
+
+export declare function set_cloexec(fd: number, enabled: boolean): void
+
+export declare function share(payload: Buffer, name?: string | undefined | null): Promise<Pipe | NamedPipe>
 
 export declare function shareFIFO(payload: Buffer, name?: string | undefined | null): Promise<NamedPipe>
 

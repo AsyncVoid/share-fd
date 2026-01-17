@@ -1,6 +1,10 @@
 #![deny(clippy::all)]
 
+#[cfg(any(target_os = "linux", target_os = "freebsd", target_os = "netbsd"))]
+pub mod linux_like;
+#[cfg(target_family = "unix")]
 pub mod unix;
+#[cfg(target_family = "windows")]
 pub mod windows;
 
 use napi::bindgen_prelude::*;
