@@ -1,12 +1,12 @@
 {
   "name": "@asyncvoid/share-fd",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Allows sharing of data between processes using file descriptors or named pipes",
   "main": "index.js",
   "author": "AsyncVoid",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:AsyncVoid/share-fd.git"
+    "url": "git+ssh://git@github.com/AsyncVoid/share-fd.git"
   },
   "license": "MIT",
   "keywords": [
