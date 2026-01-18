@@ -29,7 +29,7 @@ pub struct NamedPipe {
   should_stop: Arc<AtomicBool>,
   is_closed: Arc<AtomicBool>,
   #[cfg(windows)]
-  handle: std::os::windows::io::OwnedHandle,
+  handle: Arc<std::os::windows::io::OwnedHandle>,
 }
 
 #[cfg(test)]
