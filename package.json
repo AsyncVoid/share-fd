@@ -1,6 +1,6 @@
 {
   "name": "@asyncvoid/share-fd",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Allows sharing of data between processes using file descriptors or named pipes",
   "main": "index.js",
   "author": "AsyncVoid",
